@@ -31,6 +31,8 @@ export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
         }).then(response => {
             if (response.ok) {
                 alert("Update successful");
+                updateUser(user);
+                onLoggedOut();
             } else {
                 alert("Action failed");
             }

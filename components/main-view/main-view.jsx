@@ -29,7 +29,6 @@ export const MainView = () => {
       headers: { Authorization: `Bearer ${token}` }
     }).then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const moviesFromApi = data.map((movie) => {
           return {
             _id: movie._id,
@@ -44,31 +43,6 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]);
-
-  // if (!user) {
-  //   return (
-  //     <>
-  //       <LoginView onLoggedIn={(user, token) => {
-  //         setUser(user);
-  //         setToken(token);
-  //       }} />
-  //       or
-  //       <SignupView />
-  //     </>
-  //   );
-  // }
-
-  // if (selectedMovie) {
-  //   return (
-  //     <MovieView movie={selectedMovie} 
-  //     onBackClick={() => setSelectedMovie(null)}
-  //     />
-  //   );
-  // }
-
-  // if (movies.length === 0) {
-  //   return <div>The list is empty!</div>;
-  // } 
     
   return (
     <BrowserRouter>
