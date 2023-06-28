@@ -59,21 +59,22 @@ export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
                 <Col md={6}>           
                     <Card className="h-100">
                         <Card.Body>
-                            <Card.Title >User Info</Card.Title>
+                            <Card.Header className="mb-4">
+                                <Card.Title >User Info</Card.Title>
+                            </Card.Header>
                             <Card.Text>Username: {user.Username}</Card.Text>
                             <Card.Text>Email: {user.Email}</Card.Text>
-                            <Card.Text>Birthday: {user.Birthday}</Card.Text>
-                            <Button variant="danger" onClick={() => {
-                                deleteAccount();
-                            }}>Delete user account</Button>
+                            <Card.Text>Birthday: {user.Birthday.substr(0, 10)}</Card.Text>
                         </Card.Body>
                     </Card>
                 </Col>
 
                 <Col md={6}>
-                    <Card >
+                    <Card className="h-100">
                         <Card.Body>
-                            <Card.Title>Update Info</Card.Title>
+                            <Card.Header className="mb-4">
+                                <Card.Title>Update User Info</Card.Title>
+                            </Card.Header>
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group>
                                     <Form.Label>Username:</Form.Label>
@@ -127,6 +128,11 @@ export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
                     </Col>
                 ))}
             </Row>
+            <Button className="mb-4" variant="outline-danger" onClick={() => {
+                if (confirm("Confirm action")) {
+                deleteAccount();
+                }
+            }}>Delete user account</Button>
         </>
     );
 }
