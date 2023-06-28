@@ -1,5 +1,5 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import {Navbar, Container, Nav} from "react-bootstrap";
+import {Link} from "react-router-dom";
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
   return (

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Card, Col, Row, Form, Button } from "react-bootstrap";
-import { MovieCard } from "../movie-card/movie-card";
+import {useState} from "react";
+import {Card, Col, Row, Form, Button} from "react-bootstrap";
+import {MovieCard} from "../movie-card/movie-card";
 
 export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
 
@@ -63,6 +63,9 @@ export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
                             <Card.Text>Username: {user.Username}</Card.Text>
                             <Card.Text>Email: {user.Email}</Card.Text>
                             <Card.Text>Birthday: {user.Birthday}</Card.Text>
+                            <Button variant="danger" onClick={() => {
+                                deleteAccount();
+                            }}>Delete user account</Button>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -116,16 +119,14 @@ export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
                 </Col>
             </Row>
             <br />
-            <h4>Favorites:</h4>
-            {FavoriteMovies.map(movie => (
-                <Col className="mb-4" md={4} key={movie._id} >
-                    <MovieCard movie={movie} />
-                </Col>
-            ))}
-            <br />
-            <Button variant="danger" onClick={() => {
-                deleteAccount();
-            }}>Delete user account</Button>
+            <Row>
+                <h4 className="mb-4">Favorites:</h4>
+                {FavoriteMovies.map(movie => (
+                    <Col className="mb-4" md={4} key={movie._id} >
+                        <MovieCard movie={movie} />
+                    </Col>
+                ))}
+            </Row>
         </>
     );
 }

@@ -1,17 +1,13 @@
-import { useState } from "react";
-
+import {useState} from "react";
 import Button from "react-bootstrap/Button";
-
 import Form from "react-bootstrap/Form";
 
 export const LoginView = ({onLoggedIn}) => {
 
   const [username, setUsername] = useState("");
-
   const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
-    
     event.preventDefault();
 
     const data = {
@@ -19,7 +15,7 @@ export const LoginView = ({onLoggedIn}) => {
       secret: password
     };
 
-    fetch("https://my-flix-8675.herokuapp.com/login?Username="+username+"&Password="+password, {
+    fetch(`https://my-flix-8675.herokuapp.com/login?Username=${username}&Password=${password}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
