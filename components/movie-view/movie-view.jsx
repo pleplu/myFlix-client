@@ -1,49 +1,83 @@
 import PropTypes from "prop-types";
-
-import { Button, Card } from "react-bootstrap"
+import {useParams} from "react-router";
+import {Button, Card} from "react-bootstrap"
+import {useEffect, useState} from "react";
 
 import "./movie-view.scss";
 
-export const MovieView = ({movie, onBackClick}) => {
-    return (
-      <div>
-        <div>
-          <img 
-          className="w-100"
-          src={movie.ImagePath} />
-        </div>
-        <div>
-          <span>Title: </span>
-          <span>{movie.Title}</span>
-        </div>
-        <div>
-          <span>Description: </span>
-          <span>{movie.Description}</span>
-        </div>
-        <div>
-          <span>Genre: </span>
-          <span>{movie.Genre.Name}</span>
-        </div>
-        <div>
-          <span>Director: </span>
-          <span>{movie.Director.Name}</span>
-        </div>
-        <Button variant="primary" onClick={onBackClick}>Back</Button>
-      </div>
-    );
-  };
+export const MovieView = ({movies, user, token, updateUser}) => {
+    const {movieId} = useParams();
+    const movie = movies.find((x) => x._id === movieId);
+    const [isFavorite, setIsFavorite] = useState(user.FavoriteMovies.includes(movieId));
 
-  MovieView.propTypes = {
-    movie: PropTypes.shape({
-      Title: PropTypes.string.isRequired,
-      ImagePath: PropTypes.string.isRequired,
-      Description: PropTypes.string.isRequired,
-      Genre: PropTypes.shape({
-        Name: PropTypes.string.isRequired
-      }),
-      Director: PropTypes.shape({
-        Name: PropTypes.string.isRequired
-      })
-    }).isRequired,
-    onBackClick: PropTypes.func.isRequired
-  };
+    useEffect(() => {
+        setIsFavorite(user.FavoriteMovies.includes(movieId));
+    }, [movieId])
+
+    const addFavorite = () => {
+        fetch(`https://my-flix-8675.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+            method: "POST",
+            headers: {Authorization: `Bearer ${token}`}
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                alert("Action failed");
+            }
+        }).then(user => {
+            if (user) {
+                setIsFavorite(true);
+                updateUser(user);
+            }
+        }).catch(e => {
+            alert(e);
+        });
+    }
+
+    const removeFavorite = () => {
+        fetch(`https://my-flix-8675.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` }
+        }).then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                alert("Failed");
+            }
+        }).then(user => {
+            if (user) {
+                setIsFavorite(false);
+                updateUser(user);
+            }
+        }).catch(e => {
+            alert(e);
+        });
+    }
+
+    return (
+      <Card className="h-100">      
+        <Card.Img variant="top" src={movie.ImagePath}/>      
+        <Card.Body>
+          <Card.Title>{movie.Title}</Card.Title>
+          <Card.Text>{movie.Director.Name}</Card.Text>   
+          <Card.Text>{movie.Description}</Card.Text>
+          {isFavorite ? 
+                <Button variant="outline-danger" onClick={removeFavorite}>Remove from favorites</Button>
+                : <Button variant="outline-success" onClick={addFavorite}>Add to favorites</Button>
+            }    
+        </Card.Body>       
+      </Card>
+    );
+};
+
+MovieView.propTypes = {
+    Title: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    Genre: PropTypes.shape({
+    Name: PropTypes.string.isRequired
+    }),
+    Director: PropTypes.shape({
+    Name: PropTypes.string.isRequired
+    })
+}.isRequired

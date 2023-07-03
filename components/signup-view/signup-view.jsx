@@ -1,8 +1,5 @@
-import{ useState } from "react";
-
-import Button from "react-bootstrap/Button";
-
-import Form from "react-bootstrap/Form";
+import {useState} from "react";
+import {Button, Form} from "react-bootstrap";
 
 export const SignupView = () => {
 
@@ -79,8 +76,8 @@ export const SignupView = () => {
           required
         />
       </Form.Group>
-      
-      <Button variant="primary" type="submit">
+      <br />
+      <Button variant="outline-primary" type="submit">
         Submit
       </Button>
     </Form>
