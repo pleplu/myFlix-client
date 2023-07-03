@@ -113,7 +113,7 @@ export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
                                     />
                                 </Form.Group>
                                 <br />
-                                <Button variant="primary" type="submit">Submit</Button>
+                                <Button variant="outline-primary" type="submit">Submit</Button>
                             </Form>
                         </Card.Body>
                     </Card>
