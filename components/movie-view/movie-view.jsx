@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
-import {useParams} from "react-router";
-import {Button, Card} from "react-bootstrap"
-import {useEffect, useState} from "react";
+import { useParams } from "react-router";
+import { Button, Card } from "react-bootstrap"
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import "./movie-view.scss";
 
-export const MovieView = ({movies, user, token, updateUser}) => {
+export const MovieView = ({user, token, updateUser}) => {
+    const movies = useSelector((state) => state.movies.list);
     const {movieId} = useParams();
     const movie = movies.find((x) => x._id === movieId);
     const [isFavorite, setIsFavorite] = useState(user.FavoriteMovies.includes(movieId));
