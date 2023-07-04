@@ -1,6 +1,6 @@
-import {useState} from "react";
-import {Card, Col, Row, Form, Button} from "react-bootstrap";
-import {MovieCard} from "../movie-card/movie-card";
+import { useState } from "react";
+import { Card, Col, Row, Form, Button } from "react-bootstrap";
+import { MovieCard } from "../movie-card/movie-card";
 
 export const ProfileView = ({user, token, movies, updateUser, onLoggedOut}) => {
 
